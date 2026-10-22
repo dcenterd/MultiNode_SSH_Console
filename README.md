@@ -82,6 +82,14 @@ anyway*. Accepted host keys are stored in `%APPDATA%\remote-ssh-console\known_ho
    - *Stop on the first failing command* (default): if one command exits
      non-zero the remaining ones on that host are skipped and marked as such.
      Untick to run them all regardless.
+   - *Built-in APC presets*: a drop-down under the command box adds ready-made
+     APC PDU / InRow (NMC CLI) commands with one click - outlet status,
+     power and energy readings, phase readings, `about` (firmware), alarm count,
+     event log, date/time, outlet on / off / reboot and management-card reboot.
+     Commands that take an outlet ask for the outlet number (e.g. `3`, `1-4`)
+     or `all`. Anything that switches power or reboots asks for confirmation
+     before it runs. The presets are only a convenience - you can still type
+     any command.
    - The command timeout applies to each command separately.
    - In **Interactive shell mode** all lines are typed into one session in
      order, so `enable`, `terminal length 0`, `show running-config` works as it
