@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Remote SSH Console: run one command on many SSH hosts and read each log.
+"""MultiNode SSH Console: run one command on many SSH hosts and read each log.
 
 Written by Zareh Kasparian with Claude Code support.
 """
@@ -17,8 +17,8 @@ from tkinter import filedialog, messagebox, simpledialog, ttk
 
 import core
 
-VERSION = "1.2.10"
-APP_TITLE = "Remote SSH Console"
+VERSION = "1.2.11"
+APP_TITLE = "MultiNode SSH Console"
 CREDIT = "Written by Zareh Kasparian with Claude Code support."
 ALL_ROW = "__all__"
 COMPANY_LOGO_FILE = "systemgroup_banner.png"
@@ -843,7 +843,7 @@ class App(ttk.Frame):
         if not path:
             return
         header = (
-            f"Remote SSH Console - {datetime.now():%Y-%m-%d %H:%M:%S}\n"
+            f"MultiNode SSH Console - {datetime.now():%Y-%m-%d %H:%M:%S}\n"
             f"Command:\n{self.command_text.get('1.0', 'end').strip()}\n\n"
         )
         try:

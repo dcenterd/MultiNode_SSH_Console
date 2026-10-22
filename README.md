@@ -1,11 +1,11 @@
-# Remote SSH Console
+# MultiNode SSH Console
 
 A small Python/Tkinter desktop app: run one command on many SSH devices at
 once and read the output for each IP. It works with any SSH device.
 
 Written by Zareh Kasparian with Claude Code support.
 
-![Remote SSH Console with the System Group logo, results for six sample hosts (green Done rows, red Failed / Error / Unreachable rows), each host's output below, and at the bottom the OK / Failed counters with the green chunked progress bar](docs/screenshot.png)
+![MultiNode SSH Console with the System Group logo, results for six sample hosts (green Done rows, red Failed / Error / Unreachable rows), each host's output below, and at the bottom the OK / Failed counters with the green chunked progress bar](docs/screenshot.png)
 
 *Sample run of `about` on six example hosts (addresses and output are made
 up). Green rows = command completed, red rows = failed. Bottom right: the
@@ -25,7 +25,7 @@ On Debian/Ubuntu, Tkinter may need `sudo apt install python3-tk`.
 It lists the outside Python libraries the app needs. The only one is
 **paramiko**, which does the SSH connections. `pip install -r
 requirements.txt` (also run by `build_windows.bat` and the GitHub build)
-installs it, and the installed version ends up inside `RemoteSSHConsole.exe`.
+installs it, and the installed version ends up inside `MultiNodeSSHConsole.exe`.
 
 It currently says `paramiko>=2.12,<5`, i.e. "2.12 or newer, but below 5".
 The `<5` limit is deliberate: paramiko 5 removed the `ssh-rsa` (SHA-1) host
@@ -38,7 +38,7 @@ fine. Pinning below 5 fixes it. If your devices' firmware later offers
 
 ## Windows executable
 
-Two ways to get a single `RemoteSSHConsole.exe` (no Python needed to run it):
+Two ways to get a single `MultiNodeSSHConsole.exe` (no Python needed to run it):
 
 1. **On a Windows PC:** install Python from python.org (tick *Add python.exe
    to PATH*), then double-click `build_windows.bat`. The exe appears in `dist\`.
@@ -46,16 +46,16 @@ Two ways to get a single `RemoteSSHConsole.exe` (no Python needed to run it):
    -> Run workflow) and download the artifact, or push a tag like `v1.0.0` to
    get the exe attached to a release.
 
-**Verify the download:** each release also has `RemoteSSHConsole.exe.sha256`
+**Verify the download:** each release also has `MultiNodeSSHConsole.exe.sha256`
 (SHA-256 checksum of the exe). Put both files in one folder and compare:
 
 ```
 # Windows PowerShell
-(Get-FileHash .\RemoteSSHConsole.exe -Algorithm SHA256).Hash
-Get-Content .\RemoteSSHConsole.exe.sha256
+(Get-FileHash .\MultiNodeSSHConsole.exe -Algorithm SHA256).Hash
+Get-Content .\MultiNodeSSHConsole.exe.sha256
 
 # Linux / macOS
-sha256sum -c RemoteSSHConsole.exe.sha256
+sha256sum -c MultiNodeSSHConsole.exe.sha256
 ```
 
 The two hashes must be identical (PowerShell prints upper-case, the file is

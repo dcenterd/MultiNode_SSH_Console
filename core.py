@@ -1,4 +1,4 @@
-"""SSH logic for Remote SSH Console (no GUI imports, so it is easy to test).
+"""SSH logic for MultiNode SSH Console (no GUI imports, so it is easy to test).
 
 Written by Zareh Kasparian with Claude Code support.
 

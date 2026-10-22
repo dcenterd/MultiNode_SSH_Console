@@ -1,7 +1,7 @@
 name: Build Windows executable
 
 # Run manually (Actions tab -> "Run workflow"), or push a tag like v1.0.0 to
-# also attach RemoteSSHConsole.exe to a GitHub release.
+# also attach MultiNodeSSHConsole.exe to a GitHub release.
 on:
   workflow_dispatch:
   push:
@@ -28,30 +28,30 @@ jobs:
         run: python -m unittest discover -s tests
 
       - name: Build single-file executable
-        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --add-data "assets;assets" --name RemoteSSHConsole app.py
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --add-data "assets;assets" --name MultiNodeSSHConsole app.py
 
       - name: Compute SHA-256 checksum
         shell: pwsh
         run: |
-          $hash = (Get-FileHash dist/RemoteSSHConsole.exe -Algorithm SHA256).Hash.ToLower()
+          $hash = (Get-FileHash dist/MultiNodeSSHConsole.exe -Algorithm SHA256).Hash.ToLower()
           # Same format as `sha256sum`, so `sha256sum -c` works on Linux/macOS.
-          "$hash *RemoteSSHConsole.exe" | Out-File -Encoding ascii dist/RemoteSSHConsole.exe.sha256
+          "$hash *MultiNodeSSHConsole.exe" | Out-File -Encoding ascii dist/MultiNodeSSHConsole.exe.sha256
           Write-Host "SHA-256: $hash"
-          "SHA-256 of RemoteSSHConsole.exe: ``$hash``" | Out-File -Append $env:GITHUB_STEP_SUMMARY
+          "SHA-256 of MultiNodeSSHConsole.exe: ``$hash``" | Out-File -Append $env:GITHUB_STEP_SUMMARY
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: RemoteSSHConsole-windows
+          name: MultiNodeSSHConsole-windows
           path: |
-            dist/RemoteSSHConsole.exe
-            dist/RemoteSSHConsole.exe.sha256
+            dist/MultiNodeSSHConsole.exe
+            dist/MultiNodeSSHConsole.exe.sha256
 
       - name: Attach to release (tags only)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/RemoteSSHConsole.exe
-            dist/RemoteSSHConsole.exe.sha256
+            dist/MultiNodeSSHConsole.exe
+            dist/MultiNodeSSHConsole.exe.sha256
           generate_release_notes: true
