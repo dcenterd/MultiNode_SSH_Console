@@ -1,7 +1,8 @@
 # MultiNode SSH Console
 
 A small Python/Tkinter desktop app: run one command on many SSH devices at
-once and read the output for each IP. It works with any SSH device.
+once and read the output for each IP. It works with any SSH device, with built-in command presets specially for
+APC products (PDUs and InRows).
 
 Written by Zareh Kasparian with Claude Code support.
 
