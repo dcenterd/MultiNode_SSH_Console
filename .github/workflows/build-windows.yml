@@ -1,0 +1,57 @@
+name: Build Windows executable
+
+# Run manually (Actions tab -> "Run workflow"), or push a tag like v1.0.0 to
+# also attach RemoteSSHConsole.exe to a GitHub release.
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt pyinstaller
+
+      - name: Run tests
+        run: python -m unittest discover -s tests
+
+      - name: Build single-file executable
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --add-data "assets;assets" --name RemoteSSHConsole app.py
+
+      - name: Compute SHA-256 checksum
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash dist/RemoteSSHConsole.exe -Algorithm SHA256).Hash.ToLower()
+          # Same format as `sha256sum`, so `sha256sum -c` works on Linux/macOS.
+          "$hash *RemoteSSHConsole.exe" | Out-File -Encoding ascii dist/RemoteSSHConsole.exe.sha256
+          Write-Host "SHA-256: $hash"
+          "SHA-256 of RemoteSSHConsole.exe: ``$hash``" | Out-File -Append $env:GITHUB_STEP_SUMMARY
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: RemoteSSHConsole-windows
+          path: |
+            dist/RemoteSSHConsole.exe
+            dist/RemoteSSHConsole.exe.sha256
+
+      - name: Attach to release (tags only)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/RemoteSSHConsole.exe
+            dist/RemoteSSHConsole.exe.sha256
+          generate_release_notes: true
